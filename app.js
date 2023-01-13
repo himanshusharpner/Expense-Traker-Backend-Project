@@ -4,13 +4,14 @@ const bodyParser  = require('body-parser');
 const cors = require('cors');
 
 const sequelize  = require('./util/database');
+const expenseRoutes = require('./routes/expense');
 const userRoutes = require('./routes/users');
-const usersTable = require('./models/users');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+app.use(expenseRoutes);
 app.use(userRoutes);
 
 
