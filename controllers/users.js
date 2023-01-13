@@ -1,6 +1,13 @@
 const Users = require('../models/users');
 const bcrypt = require('bcrypt');
 
+const jwt = require('jsonwebtoken');
+
+function accessToken(id,name){
+    return jwt.sign({userId:id, name : name},'g98yigujkggggu98gyu');
+
+}
+
 exports.postAddUsers= (req,res,next)=>{
     let password = req.body.password;
     bcrypt.hash(password, 10).then( async (hash)=> {
@@ -35,7 +42,7 @@ exports.postLoginUser = async (req,res,next)=>{
         
         //if both the passwords matches
         if(match){
-            res.json({status:"successful", message:"User login successful"});
+            res.json({status:"successful", message:"User login successful", token:accessToken(user[0].dataValues.id, user[0].dataValues.name)});
         }
         //if passwords doesn't matches
         else{

@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("rpwd").value = "";
  });
 
- 
+
 var submit = document.getElementById("submit");
 submit.addEventListener('click', signup);
 

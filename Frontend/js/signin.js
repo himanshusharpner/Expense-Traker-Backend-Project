@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("pwd").value = "";
  });
 
- 
+
 let login = document.getElementById('login');
 login.addEventListener('click',loginFunction);
 
@@ -46,8 +46,8 @@ axios.post('http://localhost:3000/login',credential)
 .then(res=>{
     error.style.visibility = "hidden";
     localStorage.setItem('token',res.data.token);
-    window.location.href = "../Frontend/views/expense.html"; 
-    })
+    window.location.href = "../frontend/expense.html"; 
+    console.log(res.data)})
 .catch(err=> {
     error.style.visibility = "visible";
     console.log(err.response.data)
