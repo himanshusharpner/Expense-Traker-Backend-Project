@@ -21,3 +21,30 @@ exports.postAddUsers= (req,res,next)=>{
          });
     });
 }
+
+
+exports.postLoginUser = async (req,res,next)=>{
+    let email = req.body.email;
+    let passwordFromUser = req.body.password;
+    let user = await Users.findAll({where:{email:email}});
+
+    //if user exists in the database
+    if(user!=''){
+        let passwordFromDB = user[0].dataValues.password
+        const match = await bcrypt.compare(passwordFromUser, passwordFromDB);
+        
+        //if both the passwords matches
+        if(match){
+            res.json({status:"successful", message:"User login successful"});
+        }
+        //if passwords doesn't matches
+        else{
+            res.status(400).json({status:"failed", message:"User not authorized"});
+        }
+        }
+
+    //if user doesn't exists in the database    
+    else{
+        res.status(404).json({status:"failed" , message:"User not found"});
+        }
+}
