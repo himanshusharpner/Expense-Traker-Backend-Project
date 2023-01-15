@@ -50,6 +50,7 @@ exports.checkOut = async(req,res)=>{
 
     const promise1 = Order.update({paymentid: payment_id, status:status},{where:{id:order.id}});
     const promise2 = Users.update({isPremium:premiumStatus},{where:{id:userId}});
+    
 
     Promise.all([promise1,promise2]).then(res.json({status:status}));
 } 
