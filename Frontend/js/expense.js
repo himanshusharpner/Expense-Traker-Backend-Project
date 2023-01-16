@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded',async ()=>{
             if(res.data.premium == true ){
                 document.getElementById('premium').style.visibility='visible'
                 document.getElementById('ldrboard').style.visibility = 'visible'
-
+                document.getElementById('download').style.visibility='visible'
                 leaderboardApiCall();
             }
             else{ document.getElementById('rzp-button1').style.visibility='visible'}
@@ -94,6 +94,7 @@ document.getElementById('rzp-button1').onclick = async function(e){
         document.getElementById('rzp-button1').style.visibility='hidden';
         document.getElementById('premium').style.visibility='visible';
         document.getElementById('ldrboard').style.visibility = 'visible'
+        document.getElementById('download').style.visibility='visible
 
         alert("You are a premium user now")
         },
