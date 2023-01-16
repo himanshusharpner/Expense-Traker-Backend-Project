@@ -9,4 +9,6 @@ router.get('/data',userAuthentication.authenticate,expenseControllers.getAllData
 router.get('/membership',userAuthentication.authenticate,expenseControllers.checkMembership);
 router.post('/',userAuthentication.authenticate,expenseControllers.postAddExpense);
 
+router.get('/downloadexpense',userAuthentication.authenticate,expenseControllers.downloadexpense);
+
 module.exports = router;
