@@ -5,11 +5,16 @@ const cors = require('cors');
 
 const sequelize  = require('./util/database');
 const expenseRoutes = require('./routes/expense');
-const userRoutes = require('./routes/users');
-const purchaseRoutes = require('./routes/purchase');
+
+
+
 const expenseTable = require('./models/expenses');
 const usersTable = require('./models/users');
 const orderTable = require('./models/orders');
+const passwordRequestTable = require('./models/forgotPasswordReq');
+
+const userRoutes = require('./routes/users');
+const purchaseRoutes = require('./routes/purchase');
 const premium = require('./routes/premium');
 const passwordReset = require('./routes/password');
 
@@ -30,6 +35,9 @@ usersTable.hasMany(expenseTable);
 expenseTable.belongsTo(usersTable);
 usersTable.hasMany(orderTable);
 orderTable.belongsTo(usersTable);
+
+usersTable.hasMany(passwordRequestTable);
+passwordRequestTable.belongsTo(usersTable);
 
 
 sequelize.sync() 
