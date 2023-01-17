@@ -71,8 +71,21 @@ function showLeaderboard(e){
         document.getElementsByClassName('leaderboard')[0].style.display='none';
         document.getElementsByClassName('data_container')[0].style.display='block';   
     }
+ }
 
-   }
+ //pagination
+function activeLink(){
+    let page = document.getElementsByClassName('page-link');
+    let currentValue = 1
+    console.log(page);
+    for(index of page){
+        index.classList.remove('active');
+    }
+
+    event.target.classList.add('active');
+    currentValue = event.target.value;  
+}
+
 
 
 //razor pay integeration
