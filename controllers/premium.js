@@ -8,9 +8,10 @@ exports.leaderboard = (req,res,next)=>{
             model:Expense,
             group:User.name,
             attributes:['amount'],
+           
      }})
     .then(data => {
-        console.log(JSON.stringify(data));
+        
         let result=[];
         data.forEach(element => {
             let sum=0;
@@ -30,3 +31,5 @@ exports.leaderboard = (req,res,next)=>{
 
     .catch(err=>res.status(400).json({message:"unable to fetch leaderboard data",error:err}))
 } 
+
+  

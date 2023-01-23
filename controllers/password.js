@@ -67,15 +67,15 @@ exports.resetpassword = async(req, res,next) => {
 
 //when user click on reset password button after entering the new password
 exports.updatepassword = async(req, res, next)=>{
-
+  
     const resetPasswordId = req.params.resetpasswordid;
     const newPassword = req.query.newpassword
-
+    
     const request = await reqPasswords.findOne({where:{id:resetPasswordId}});
     if(request!=null){
         let userId = request.userId;
         console.log(newPassword)
-
+        
         //encrypt the password before it into database
         bcrypt.hash(newPassword, 10, function(err, hash) {
             if(err){
@@ -84,7 +84,7 @@ exports.updatepassword = async(req, res, next)=>{
             }
             User.update({ password: hash },{where:{id:userId}})
             .then(() => {
-                res.status(201).json({message: 'Successfuly update the new password'})
+                res.status(201).json({message: 'Successfully updated the new password'})
             })})
     }
 

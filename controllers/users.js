@@ -1,6 +1,5 @@
 const Users = require('../models/users');
 const bcrypt = require('bcrypt');
-
 const jwt = require('jsonwebtoken');
 
 function accessToken(id,name){

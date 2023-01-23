@@ -1,7 +1,4 @@
-const expense = require('../models/expenses');
 const Expense = require('../models/expenses');
-const User = require('../models/users')
-
 const User = require('../models/users');
 const S3service = require('../services/S3services');
 const download = require('../models/download');
@@ -9,14 +6,14 @@ const download = require('../models/download');
 exports.downloadexpense = async(req,res)=>{
     try{
     const userId = req.body.userId
-
+    
     Expense.findAll({where:{userId:userId}})
     .then(async data=>{
         let stringifyData = JSON.stringify(data);
-
+        
         const filename = `Expense${userId}/${new Date()}.txt`;
         const responseFromS3 = await S3service.uploadToS3(stringifyData,filename);
-        console.log(responseFromS3)
+        
         download.create({
             userId:userId,
             downloadlinks:responseFromS3.Location
@@ -29,8 +26,10 @@ exports.downloadexpense = async(req,res)=>{
  res.status(400).json({fileURL:'', success:false,error:err});
  }
 }
+ 
 
 exports.postAddExpense=async (req,res,next)=>{
+    
  await Expense.create({
     amount:req.body.amount,
     description:req.body.description,
@@ -40,11 +39,10 @@ exports.postAddExpense=async (req,res,next)=>{
  .then(result=> res.json(result.dataValues.id))//here the id is expense data id
  .catch(err => console.log(err));
 }
-
+ 
 
 exports.getDeleteExpense=async(req,res,next)=>{
     const id = req.params.id;
-    console.log('controllers_expense = '+id)
     Expense.findByPk(id)
     .then(data=>{
         data.destroy();
@@ -52,18 +50,21 @@ exports.getDeleteExpense=async(req,res,next)=>{
     })
 }
 
+
+exports.getAllData = async(req,res,next)=>{
+    const userId = req.body.userId
+    
+    Expense.findAll({where:{userId:userId}})
+    .then(data=>{
+        res.json(data)
+    });
+}
+
+
 exports.checkMembership = async(req,res,next)=>{
     const userId = req.body.userId
 
     User.findOne({where:{id:userId}})
-    .then(data=>{
-        res.json({premium:data.isPremium})
-    });
-} 
-
-exports.getAllData = async(req,res,next)=>{
-    const userId = req.body.userId
-    Expense.findAll({where:{userId:userId}})
     .then(async data=>{
         const user = await User.findByPk(userId);
         res.json({premium:data.isPremium,rowPreference:user.rowPreference})
@@ -76,6 +77,6 @@ exports.updateRowPreference = async(req,res,next)=>{
     console.log(req.params.rows);
     const user = await User.findByPk(userId);
     user.update({rowPreference:req.params.rows});
-
+    
     res.send('row preference saved');
 }

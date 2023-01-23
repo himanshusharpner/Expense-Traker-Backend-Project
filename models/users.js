@@ -29,6 +29,7 @@ const users = sequelize.define('users',{
         type:Sequelize.INTEGER,
         defaultValue:5
     }
+
 })
  
 module.exports = users;
